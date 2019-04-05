@@ -50,7 +50,7 @@ int main(){
             }
         }
 
-        xn = xnew;
+        xn = receive2DArray(xnew, n, pd);
         ft = fitness(xn, n, pd); // Function for fitness evaluation of new solutions
 
         /* Update position and memory */
