@@ -4,7 +4,7 @@
 #include "Helper.hpp"
 using namespace std;
 
-/* Inicialização de variáveis */
+/* Variables initialization */
 
 int pd=10; // Problem dimension (number of decision variables)
 int n=20; // Flock (population) size
@@ -16,19 +16,21 @@ int u=100;
 int main(){
     double **x = init(n, pd, l, u);
 
-    double **xn = x;
+    double **xn = receive2DArray(x, n, pd);
     double *ft = fitness(xn, n, pd);
 
-    double **mem = x; // inicialização da memória
-    double *fit_mem = ft; // memório fitness
+    double **mem = receive2DArray(x, n, pd); // Memory initialization
+    double *fit_mem = ft; // Fitness of memory positions
 
-    int tmax = 5000; // Número máximo de iteraçõeos
 
-    /* Início das iterações */
+    int tmax = 5000; // Max numuber of iterations (itermax)
+    double* ffit = new double[tmax]; // Best fit of each iteration
+
+    /* Iteration begin */
 
     for (int t = 0; t < tmax; t++) {
 
-        int *num = randArray(n); //número randomico
+        int *num = randArray(n); // Generation of random candidate crows for following (chasing)
 
         srand(time(NULL));
         double** xnew = new double*[n];
@@ -38,27 +40,39 @@ int main(){
             if (((double)rand()/RAND_MAX) > ap) {
 
                 for (int j = 0; j < pd; j++) {
-                    xnew[i][j] = x[i][j]+fl*((double)rand()/RAND_MAX)*(mem[num[i]][j]-x[i][j]);
+                    xnew[i][j] = x[i][j]+fl*((double)rand()/RAND_MAX)*(mem[num[i]][j]-x[i][j]); // Generation of a new position for crow i (state 1)
                 }
             } else{
 
                 for (int j = 0; j < pd; j++) {
-                    xnew[i][j] = l-(l-u)*((double)rand()/RAND_MAX);
+                    xnew[i][j] = l-(l-u)*((double)rand()/RAND_MAX); // Generation of a new position for crow i (state 2)
                 }
             }
         }
 
         xn = xnew;
-        ft = fitness(xn, n, pd);
+        ft = fitness(xn, n, pd); // Function for fitness evaluation of new solutions
+
+        /* Update position and memory */
 
         for (int i = 0; i < n; i++) {
             if (beetwenLowerUpper(xnew, l, u, i, pd)) {
-                /* code */
+                for (int j = 0; j < pd; j++) {
+                    x[i][j] = xnew[i][j]; // Update position
+                }
+                if (ft[i] < fit_mem[i]) {
+                    for (int j = 0; j < pd; j++) {
+                        mem[i][j] = xnew[i][j]; // Update memory
+                        fit_mem[i] = ft[i];
+                    }
+                }
             }
         }
+
+        // Best found value until iteration t
     }
 
-
+    // Show solution of the problem
 
 
     return 0;

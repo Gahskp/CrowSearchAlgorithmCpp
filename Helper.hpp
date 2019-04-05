@@ -23,6 +23,19 @@ bool beetwenLowerUpper(double** xnew, int l, int u, int i, int pd){
     }
 }
 
+double** receive2DArray(double** var, int n, int pd){
+    double** x = new double*[n];
+
+    for (int i = 0; i < n; i++) {
+        x[i] = new double[pd];
+        for (int j = 0; j < pd; j++) {
+            x[i][j] = var[i][j];
+        }
+    }
+
+    return x;
+}
+
 void print2DArray(double** array, int linha, int coluna){
     for (int i = 0; i < linha; i++) {
         for (int j = 0; j < coluna; j++) {
