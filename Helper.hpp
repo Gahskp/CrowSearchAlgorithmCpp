@@ -16,11 +16,11 @@ int* randArray(int tam){
     return rd;
 }
 
-bool beetwenLowerUpper(double** xnew, int l, int u, int i, int pd){
+bool betweenLowerUpper(double** xnew, int l, int u, int i, int pd){
     for (int j = 0; j < pd; j++) {
         if (!(xnew[i][j] >= l && xnew[i][j] <= u)) return false;
-        else return true;
     }
+    return true;
 }
 
 double** receive2DArray(double** var, int n, int pd){
