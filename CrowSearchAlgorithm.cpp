@@ -20,10 +20,10 @@ int main(){
     double *ft = fitness(xn, n, pd);
 
     double **mem = receive2DArray(x, n, pd); // Memory initialization
-    double *fit_mem = ft; // Fitness of memory positions
+    double *fit_mem = receiveArray(ft, n); // Fitness of memory positions
 
 
-    int tmax = 5000; // Max numuber of iterations (itermax)
+    int tmax = 1; // Max numuber of iterations (itermax)
     double* ffit = new double[tmax]; // Best fit of each iteration
 
     /* Iteration begin */
@@ -38,7 +38,6 @@ int main(){
 
             xnew[i] = new double[pd];
             if (((double)rand()/RAND_MAX) > ap) {
-
                 for (int j = 0; j < pd; j++) {
                     xnew[i][j] = x[i][j]+fl*((double)rand()/RAND_MAX)*(mem[num[i]][j]-x[i][j]); // Generation of a new position for crow i (state 1)
                 }
@@ -53,23 +52,24 @@ int main(){
         xn = receive2DArray(xnew, n, pd);
         ft = fitness(xn, n, pd); // Function for fitness evaluation of new solutions
 
-        /* Update position and memory */
 
+
+        /* Update position and memory */
         for (int i = 0; i < n; i++) {
-            if (beetwenLowerUpper(xnew, l, u, i, pd)) {
+            if (betweenLowerUpper(xnew, l, u, i, pd)) {
                 for (int j = 0; j < pd; j++) {
                     x[i][j] = xnew[i][j]; // Update position
                 }
                 if (ft[i] < fit_mem[i]) {
                     for (int j = 0; j < pd; j++) {
                         mem[i][j] = xnew[i][j]; // Update memory
-                        fit_mem[i] = ft[i];
                     }
+                    fit_mem[i] = ft[i];
                 }
             }
         }
 
-        // Best found value until iteration t
+        ffit[t] = smallestElement(fit_mem, n); // Best found value until iteration t
     }
 
     // Show solution of the problem

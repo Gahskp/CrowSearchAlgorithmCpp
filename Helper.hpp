@@ -7,6 +7,7 @@
 using namespace std;
 
 int* randArray(int tam){
+
     int* rd = new int[tam];
     srand(time(NULL));
     for (int i = 0; i < tam; i++) {
@@ -17,13 +18,27 @@ int* randArray(int tam){
 }
 
 bool betweenLowerUpper(double** xnew, int l, int u, int i, int pd){
+
     for (int j = 0; j < pd; j++) {
         if (!(xnew[i][j] >= l && xnew[i][j] <= u)) return false;
     }
     return true;
 }
 
+double smallestElement(double* array, int n){
+
+    double temp = array[0];
+
+    for (int i = 0; i < n; i++) {
+        if (temp > array[i]){
+            temp = array[i];
+        }
+    }
+    return temp;
+}
+
 double** receive2DArray(double** var, int n, int pd){
+
     double** x = new double*[n];
 
     for (int i = 0; i < n; i++) {
@@ -36,7 +51,19 @@ double** receive2DArray(double** var, int n, int pd){
     return x;
 }
 
+double* receiveArray(double* var, int n){
+
+    double* x = new double[n];
+
+    for (int i = 0; i < n; i++) {
+            x[i] = var[i];
+    }
+
+    return x;
+}
+
 void print2DArray(double** array, int linha, int coluna){
+
     for (int i = 0; i < linha; i++) {
         for (int j = 0; j < coluna; j++) {
             cout << i << " - " << array[i][j] << " - " << j << endl;
@@ -46,6 +73,7 @@ void print2DArray(double** array, int linha, int coluna){
 }
 
 void printArray(double* array, int tam){
+
   for (int i = 0; i < tam; i++) {
     cout << array[i] << endl;
   }
