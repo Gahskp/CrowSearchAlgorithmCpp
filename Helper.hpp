@@ -2,8 +2,7 @@
 
 #define HELPER_HPP
 
-// #include <iostream>
-// #include <ctime>
+#include <cmath>
 using namespace std;
 
 int* randArray(int tam){

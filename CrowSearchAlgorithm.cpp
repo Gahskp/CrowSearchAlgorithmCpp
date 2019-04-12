@@ -10,8 +10,8 @@ int pd=10; // Problem dimension (number of decision variables)
 int n=20; // Flock (population) size
 double ap=0.1; // Awareness probability
 int fl=2; // Flight length (fl)
-int l=-100;
-int u=100;
+int l=-100; // Lower Bound
+int u=100; // Upper Bound
 
 int main(){
     double **x = init(n, pd, l, u);
@@ -23,11 +23,10 @@ int main(){
     double *fit_mem = receiveArray(ft, n); // Fitness of memory positions
 
 
-    int tmax = 1; // Max numuber of iterations (itermax)
+    int tmax = 5000; // Max numuber of iterations (itermax)
     double* ffit = new double[tmax]; // Best fit of each iteration
 
     /* Iteration begin */
-
     for (int t = 0; t < tmax; t++) {
 
         int *num = randArray(n); // Generation of random candidate crows for following (chasing)
@@ -52,8 +51,6 @@ int main(){
         xn = receive2DArray(xnew, n, pd);
         ft = fitness(xn, n, pd); // Function for fitness evaluation of new solutions
 
-
-
         /* Update position and memory */
         for (int i = 0; i < n; i++) {
             if (betweenLowerUpper(xnew, l, u, i, pd)) {
@@ -70,6 +67,7 @@ int main(){
         }
 
         ffit[t] = smallestElement(fit_mem, n); // Best found value until iteration t
+        std::cout << ffit[t] << '\n';
     }
 
     // Show solution of the problem
