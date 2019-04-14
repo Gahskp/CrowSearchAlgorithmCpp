@@ -31,7 +31,7 @@ int main(){
 
         int *num = randArray(n); // Generation of random candidate crows for following (chasing)
 
-        srand(time(NULL));
+        //srand(time(NULL));
         double** xnew = new double*[n];
         for (int i = 0; i < n; i++) {
 
@@ -53,10 +53,13 @@ int main(){
 
         /* Update position and memory */
         for (int i = 0; i < n; i++) {
+
             if (betweenLowerUpper(xnew, l, u, i, pd)) {
+
                 for (int j = 0; j < pd; j++) {
                     x[i][j] = xnew[i][j]; // Update position
                 }
+
                 if (ft[i] < fit_mem[i]) {
                     for (int j = 0; j < pd; j++) {
                         mem[i][j] = xnew[i][j]; // Update memory
@@ -72,6 +75,7 @@ int main(){
 
     // Show solution of the problem
 
+    //IMPLMENTAÇÃO / PARALELIZAÇÃO / ESTUDO DE CASO
 
     return 0;
 }

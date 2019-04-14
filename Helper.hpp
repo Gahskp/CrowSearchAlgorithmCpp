@@ -8,7 +8,7 @@ using namespace std;
 int* randArray(int tam){
 
     int* rd = new int[tam];
-    srand(time(NULL));
+    //srand(time(NULL));
     for (int i = 0; i < tam; i++) {
         rd[i] = ceil(tam*((double) rand() / (RAND_MAX)))-1;
     }
